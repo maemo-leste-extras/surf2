@@ -4,8 +4,6 @@ Priority: optional
 Maintainer: Ivan J. <parazyd@dyne.org>
 Build-Depends: debhelper (>= 9), libwebkit2gtk-4.0-dev, libgcr-3-dev, pkg-config, libgtk-3-dev
 Standards-Version: 3.9.8
-Homepage: http://surf.suckless.org
-Vcs-Git: https://github.com/maemo-leste/surf2
 
 Package: surf2
 Architecture: any
