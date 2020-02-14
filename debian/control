@@ -1,0 +1,17 @@
+Source: surf2
+Section: net
+Priority: optional
+Maintainer: Ivan J. <parazyd@dyne.org>
+Build-Depends: debhelper (>= 9), libwebkit2gtk-4.0-dev, libgcr-3-dev, pkg-config, libgtk-3-dev
+Standards-Version: 3.9.8
+Homepage: http://surf.suckless.org
+Vcs-Git: https://github.com/maemo-leste/surf2
+
+Package: surf2
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Simple web browser by suckless community. Version 2.
+ Surf2 is the latest version of the no-nonsense minimal browser
+ developed by the suckless community. The browser is based on
+ WebKit2/GTK+ and supports the XEmbed protocol, which makes it
+ possible to embed it in another application, such as tabbed.
