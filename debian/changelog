@@ -1,0 +1,11 @@
+surf2 (2.1-1) unstable; urgency=medium
+
+  * Implement Gtk toolbar
+
+ -- Ivan J. <parazyd@dyne.org>  Sat, 15 Feb 2020 00:09:24 +0100
+
+surf2 (2.0-1) unstable; urgency=medium
+
+  * Initial release
+
+ -- Vincenzo (KatolaZ) Nicosia <katolaz@freaknet.org>  Sun, 23 Apr 2017 19:32:49 +0100
