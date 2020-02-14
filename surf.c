@@ -97,7 +97,8 @@ typedef struct {
 } Parameter;
 
 typedef struct Client {
-	GtkWidget *win;
+	GtkWidget *win, *box, *tbox, *wbox, *toolbar, *urlentry;
+	GtkToolItem *btnback, *btnfwd, *btnrefresh, *btnfs, *entry;
 	WebKitWebView *view;
 	WebKitWebInspector *inspector;
 	WebKitFindController *finder;
@@ -175,6 +176,8 @@ static void spawn(Client *c, const Arg *a);
 static void msgext(Client *c, char type, const Arg *a);
 static void destroyclient(Client *c);
 static void cleanup(void);
+static void entry_callback(Client *c);
+static void setuptoolbar(Client *c);
 
 /* GTK/WebKit */
 static WebKitWebView *newview(Client *c, WebKitWebView *rv);
@@ -1363,6 +1366,44 @@ winevent(GtkWidget *w, GdkEvent *e, Client *c)
 }
 
 void
+entry_callback(Client *c)
+{
+	Arg a = {.v = gtk_entry_get_text(GTK_ENTRY(c->urlentry))};
+	loaduri(c, &a);
+}
+
+void
+setuptoolbar(Client *c)
+{
+	c->toolbar = gtk_toolbar_new();
+	gtk_toolbar_set_style(GTK_TOOLBAR(c->toolbar), GTK_TOOLBAR_ICONS);
+
+	c->btnback = gtk_tool_button_new(gtk_image_new_from_icon_name("go-previous", 64), NULL);
+	c->btnfwd = gtk_tool_button_new(gtk_image_new_from_icon_name("go-next", 64), NULL);
+	c->btnrefresh = gtk_tool_button_new(gtk_image_new_from_icon_name("view-refresh", 64), NULL);
+	c->btnfs = gtk_tool_button_new(gtk_image_new_from_icon_name("view-fullscreen", 64), NULL);
+
+	c->urlentry = gtk_entry_new();
+	c->entry = gtk_tool_item_new();
+	gtk_container_add(GTK_CONTAINER(c->entry), GTK_WIDGET(c->urlentry));
+
+	gtk_toolbar_insert(GTK_TOOLBAR(c->toolbar), c->btnback, -1);
+	gtk_toolbar_insert(GTK_TOOLBAR(c->toolbar), c->btnfwd, -1);
+	gtk_toolbar_insert(GTK_TOOLBAR(c->toolbar), c->btnrefresh, -1);
+	gtk_tool_item_set_expand(GTK_TOOL_ITEM(c->entry), TRUE);
+	gtk_toolbar_insert(GTK_TOOLBAR(c->toolbar), GTK_TOOL_ITEM(c->entry), -1);
+	gtk_toolbar_insert(GTK_TOOLBAR(c->toolbar), c->btnfs, -1);
+
+	gtk_box_pack_start(GTK_BOX(c->tbox), c->toolbar, TRUE, TRUE, 2);
+
+	g_signal_connect_swapped(c->btnback, "clicked", G_CALLBACK(webkit_web_view_go_back), c->view);
+	g_signal_connect_swapped(c->btnfwd, "clicked", G_CALLBACK(webkit_web_view_go_forward), c->view);
+	g_signal_connect_swapped(c->btnrefresh, "clicked", G_CALLBACK(webkit_web_view_reload), c->view);
+	g_signal_connect_swapped(c->urlentry, "activate", G_CALLBACK(entry_callback), c);
+	g_signal_connect_swapped(c->btnfs, "clicked", G_CALLBACK(togglefullscreen), c);
+}
+
+void
 showview(WebKitWebView *v, Client *c)
 {
 	GdkRGBA bgcolor = { 0 };
@@ -1374,7 +1415,8 @@ showview(WebKitWebView *v, Client *c)
 	c->pageid = webkit_web_view_get_page_id(c->view);
 	c->win = createwindow(c);
 
-	gtk_container_add(GTK_CONTAINER(c->win), GTK_WIDGET(c->view));
+	setuptoolbar(c);
+
 	gtk_widget_show_all(c->win);
 	gtk_widget_grab_focus(GTK_WIDGET(c->view));
 
@@ -1416,6 +1458,13 @@ createwindow(Client *c)
 		w = gtk_plug_new(embed);
 	} else {
 		w = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+
+		c->box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 2);
+		c->tbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
+		gtk_container_add(GTK_CONTAINER(c->box), c->tbox);
+		gtk_box_pack_start(GTK_BOX(c->box), GTK_WIDGET(c->view), TRUE, TRUE, 0);
+
+		gtk_container_add(GTK_CONTAINER(w), c->box);
 
 		wmstr = g_path_get_basename(argv0);
 		gtk_window_set_wmclass(GTK_WINDOW(w), wmstr, "Surf");
@@ -1542,6 +1591,7 @@ void
 titlechanged(WebKitWebView *view, GParamSpec *ps, Client *c)
 {
 	c->title = webkit_web_view_get_title(c->view);
+	gtk_entry_set_text(GTK_ENTRY(c->urlentry), webkit_web_view_get_uri(c->view));
 	updatetitle(c);
 }
 
