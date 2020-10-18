@@ -64,6 +64,12 @@ install: all
 	mkdir -p $(DESTDIR)$(MANPREFIX)/man1
 	sed "s/VERSION/$(VERSION)/g" < surf.1 > $(DESTDIR)$(MANPREFIX)/man1/surf.1
 	chmod 644 $(DESTDIR)$(MANPREFIX)/man1/surf.1
+	mkdir -p $(DESTDIR)/usr/share/icons/hicolor/48x48/hildon
+	mkdir -p $(DESTDIR)/usr/share/icons/hicolor/64x64/hildon
+	mkdir -p $(DESTDIR)/usr/share/applications/hildon
+	cp -f icons/48x48/* $(DESTDIR)/usr/share/icons/hicolor/48x48/hildon/
+	cp -f icons/64x64/* $(DESTDIR)/usr/share/icons/hicolor/64x64/hildon/
+	cp -f surf.desktop $(DESTDIR)/usr/share/applications/hildon/
 
 uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/bin/surf

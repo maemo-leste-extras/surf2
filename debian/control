@@ -1,5 +1,5 @@
 Source: surf2
-Section: net
+Section: user/communication
 Priority: optional
 Maintainer: Ivan J. <parazyd@dyne.org>
 Build-Depends: debhelper (>= 10), libwebkit2gtk-4.0-dev, libgcr-3-dev, pkg-config, libgtk-3-dev
@@ -13,3 +13,9 @@ Description: Simple web browser by suckless community. Version 2.
  developed by the suckless community. The browser is based on
  WebKit2/GTK+ and supports the XEmbed protocol, which makes it
  possible to embed it in another application, such as tabbed.
+Maemo-Icon-26:
+ iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAACXBIWXMAABEPAAAZlwH3bbcpAAAA
+ GXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAIpJREFUSInt1MENgzAMBVD/igEo
+ Y2QJyhCwSnMjx64C3qdjMEI+10jlhJygovzjP/hJlmU83yulQB4lkAr9B9QcdArwmx0CoNtnUmvo
+ utXFKK71+soOAQyS4Vfc77wrdDoNgcF8apQeYEgrmCMi0nkdSa5pV251nV+C9VCS7gciMVtDR7nf
+ eVfodHYoNh67HmBSSAAAAABJRU5ErkJggg==

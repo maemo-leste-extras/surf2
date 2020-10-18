@@ -1,3 +1,9 @@
+surf2 (2.1.2-1) unstable; urgency=medium
+
+  * Add desktop entry and icons.
+
+ -- Ivan J. <parazyd@dyne.org>  Mon, 19 Oct 2020 01:07:28 +0200
+
 surf2 (2.1.1-1) unstable; urgency=medium
 
   * Toggle Hildon compositing upon toggling fullscreen.
