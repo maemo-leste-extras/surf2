@@ -1,3 +1,12 @@
+surf2 (2.1.1-1) unstable; urgency=medium
+
+  * Toggle Hildon compositing upon toggling fullscreen.
+  * Implement delatom.
+  * Implement setatominteger.
+  * Rename setatom to setatomstring.
+
+ -- Ivan J. <parazyd@dyne.org>  Sun, 18 Oct 2020 15:33:56 +0200
+
 surf2 (2.1-1) unstable; urgency=medium
 
   * Implement Gtk toolbar
