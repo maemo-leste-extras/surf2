@@ -37,7 +37,7 @@
 #define LENGTH(x)               (sizeof(x) / sizeof(x[0]))
 #define CLEANMASK(mask)         (mask & (MODKEY|GDK_SHIFT_MASK))
 
-enum { AtomFind, AtomGo, AtomUri, AtomLast };
+enum { AtomFind, AtomGo, AtomUri, AtomComposite, AtomLast };
 
 enum {
 	OnDoc   = WEBKIT_HIT_TEST_RESULT_CONTEXT_DOCUMENT,
@@ -348,6 +348,7 @@ setup(void)
 	atoms[AtomFind] = XInternAtom(dpy, "_SURF_FIND", False);
 	atoms[AtomGo] = XInternAtom(dpy, "_SURF_GO", False);
 	atoms[AtomUri] = XInternAtom(dpy, "_SURF_URI", False);
+	atoms[AtomComposite] = XInternAtom(dpy, "_HILDON_NON_COMPOSITED_WINDOW", False);
 
 	gtk_init(NULL, NULL);
 
@@ -1997,10 +1998,13 @@ void
 togglefullscreen(Client *c, const Arg *a)
 {
 	/* toggling value is handled in winevent() */
-	if (c->fullscreen)
+	if (c->fullscreen) {
 		gtk_window_unfullscreen(GTK_WINDOW(c->win));
-	else
+		delatom(c, AtomComposite);
+	} else {
 		gtk_window_fullscreen(GTK_WINDOW(c->win));
+		setatominteger(c, AtomComposite, 1);
+	}
 }
 
 void
