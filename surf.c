@@ -159,6 +159,7 @@ static Client *newclient(Client *c);
 static void loaduri(Client *c, const Arg *a);
 static const char *geturi(Client *c);
 static void setatomstring(Client *c, int a, const char *v);
+static void setatominteger(Client *c, int a, int v);
 static const char *getatom(Client *c, int a);
 static void updatetitle(Client *c);
 static void gettogglestats(Client *c);
@@ -617,6 +618,15 @@ setatomstring(Client *c, int a, const char *v)
 	XChangeProperty(dpy, c->xid,
 	                atoms[a], XA_STRING, 8, PropModeReplace,
 	                (unsigned char *)v, strlen(v) + 1);
+	XSync(dpy, False);
+}
+
+void
+setatominteger(Client *c, int a, int v)
+{
+	XChangeProperty(dpy, c->xid,
+	                atoms[a], XA_INTEGER, 32, PropModeReplace,
+	                (unsigned char *)&v, 1);
 	XSync(dpy, False);
 }
 
