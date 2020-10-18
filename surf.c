@@ -158,7 +158,7 @@ static const char *getcurrentuserhomedir(void);
 static Client *newclient(Client *c);
 static void loaduri(Client *c, const Arg *a);
 static const char *geturi(Client *c);
-static void setatom(Client *c, int a, const char *v);
+static void setatomstring(Client *c, int a, const char *v);
 static const char *getatom(Client *c, int a);
 static void updatetitle(Client *c);
 static void gettogglestats(Client *c);
@@ -589,7 +589,7 @@ loaduri(Client *c, const Arg *a)
 			free(apath);
 	}
 
-	setatom(c, AtomUri, url);
+	setatomstring(c, AtomUri, url);
 
 	if (strcmp(url, geturi(c)) == 0) {
 		reload(c, a);
@@ -612,7 +612,7 @@ geturi(Client *c)
 }
 
 void
-setatom(Client *c, int a, const char *v)
+setatomstring(Client *c, int a, const char *v)
 {
 	XChangeProperty(dpy, c->xid,
 	                atoms[a], XA_STRING, 8, PropModeReplace,
@@ -1471,8 +1471,8 @@ showview(WebKitWebView *v, Client *c)
 		webkit_web_view_set_zoom_level(c->view,
 		                               curconfig[ZoomLevel].val.f);
 
-	setatom(c, AtomFind, "");
-	setatom(c, AtomUri, "about:blank");
+	setatomstring(c, AtomFind, "");
+	setatomstring(c, AtomUri, "about:blank");
 }
 
 GtkWidget *
@@ -1574,7 +1574,7 @@ loadchanged(WebKitWebView *v, WebKitLoadEvent e, Client *c)
 
 	switch (e) {
 	case WEBKIT_LOAD_STARTED:
-		setatom(c, AtomUri, uri);
+		setatomstring(c, AtomUri, uri);
 		c->title = uri;
 		c->https = c->insecure = 0;
 		seturiparameters(c, uri, loadtransient);
@@ -1584,7 +1584,7 @@ loadchanged(WebKitWebView *v, WebKitLoadEvent e, Client *c)
 			g_clear_object(&c->failedcert);
 		break;
 	case WEBKIT_LOAD_REDIRECTED:
-		setatom(c, AtomUri, uri);
+		setatomstring(c, AtomUri, uri);
 		c->title = uri;
 		seturiparameters(c, uri, loadtransient);
 		break;
