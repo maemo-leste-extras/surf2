@@ -1,5 +1,5 @@
 Source: surf2
-Section: user/communication
+Section: user/network
 Priority: optional
 Maintainer: Ivan J. <parazyd@dyne.org>
 Build-Depends:
