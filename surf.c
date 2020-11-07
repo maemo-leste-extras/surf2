@@ -1608,7 +1608,7 @@ loadchanged(WebKitWebView *v, WebKitLoadEvent e, Client *c)
 		seturiparameters(c, uri, loadtransient);
 		break;
 	case WEBKIT_LOAD_COMMITTED:
-		setatom(c, AtomUri, uri);
+		setatomstring(c, AtomUri, uri);
 		c->title = uri;
 		seturiparameters(c, uri, loadcommitted);
 		c->https = webkit_web_view_get_tls_info(c->view, &c->cert,
