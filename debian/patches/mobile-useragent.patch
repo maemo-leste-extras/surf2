@@ -1,0 +1,12 @@
+diff --git a/config.def.h b/config.def.h
+index be168ab..8c5ddb1 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -1,6 +1,6 @@
+ /* modifier 0 means no modifier */
+ static int surfuseragent    = 1;  /* Append Surf version to default WebKit user agent */
+-static char *fulluseragent  = ""; /* Or override the whole user agent string */
++static char *fulluseragent  = "Mozilla/5.0 (Linux; U; Android 4.4.2; en-us; SCH-I535 Build/KOT49H) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30"; /* Or override the whole user agent string */
+ static char *scriptfile     = "~/.surf/script.js";
+ static char *styledir       = "~/.surf/styles/";
+ static char *certdir        = "~/.surf/certificates/";
