@@ -184,6 +184,7 @@ static void destroyclient(Client *c);
 static void cleanup(void);
 static void entry_callback(Client *c);
 static void setuptoolbar(Client *c);
+static void toggletoolbar(Client *c);
 
 /* GTK/WebKit */
 static WebKitWebView *newview(Client *c, WebKitWebView *rv);
@@ -261,6 +262,7 @@ static const char *useragent;
 static Parameter *curconfig;
 static int modparams[ParameterLast];
 static int spair[2];
+static int toolbarvisible;
 char *argv0;
 
 static ParamName loadtransient[] = {
@@ -1447,6 +1449,20 @@ setuptoolbar(Client *c)
 	g_signal_connect_swapped(c->btnrefresh, "clicked", G_CALLBACK(webkit_web_view_reload), c->view);
 	g_signal_connect_swapped(c->urlentry, "activate", G_CALLBACK(entry_callback), c);
 	g_signal_connect_swapped(c->btnfs, "clicked", G_CALLBACK(togglefullscreen), c);
+
+	toolbarvisible = 1;
+}
+
+void
+toggletoolbar(Client *c)
+{
+	fprintf(stderr, "toggletoolbar\n");
+	if (toolbarvisible)
+		gtk_widget_hide(GTK_WIDGET(c->toolbar));
+	else
+		gtk_widget_show(GTK_WIDGET(c->toolbar));
+
+	toolbarvisible = !toolbarvisible;
 }
 
 void
