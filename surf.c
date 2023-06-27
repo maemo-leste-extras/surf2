@@ -1330,6 +1330,7 @@ createview(WebKitWebView *v, WebKitNavigationAction *a, Client *c)
 gboolean
 buttonreleased(GtkWidget *w, GdkEvent *e, Client *c)
 {
+	gtk_widget_grab_focus(w);
 	WebKitHitTestResultContext element;
 	int i;
 
